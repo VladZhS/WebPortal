@@ -1,0 +1,56 @@
+
+    <div class="row mb-3">
+        <div class="col">
+            <strong style="color: rgb(65, 65, 255)">New Order</strong>
+        </div>
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            <p class="align-bottom" >Order Number: </p>
+        </div>
+        <div class="col-2">
+            <p class="align-bottom " ></p>
+        </div>
+        <div class="col-2">
+            <p class="align-bottom" >Order Date: </p>
+        </div>
+        <div class="col-3">
+            <p class="align-bottom" ></p>
+        </div>
+    </div>
+    
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            <span class="align-middle">Customer: </span>
+        </div>
+        <div class="col ">
+            <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle #selectedValue>{{selectedValue}}</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <div *ngFor="let customer of customers;" >
+                        <button ngbDropdownItem id="option" on-click="selectedValue=category"></button>
+                   
+                      </div>
+                </div>
+              </div>
+        </div>
+       
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            <span class="align-middle">Status: </span>
+        </div>
+        <div class="col ">
+            <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle >{{selectedValue  || "Select Status"}}</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <div *ngFor="let category of categories;" >
+                        <button ngbDropdownItem id="option" on-click=""></button>
+                   
+                      </div>
+                </div>
+              </div>
+        </div>
+       
+    </div>
+       
