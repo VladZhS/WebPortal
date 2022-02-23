@@ -16,11 +16,7 @@ namespace WebPortalServer.Services
 
         public Product CreateProduct(ProductModel model)
         {
-            var product = context.Product.FirstOrDefault(x => x.Id == model.Id);
-            if (product != null)
-                throw new InvalidOperationException();
-
-            product = model.ToEntity(new Product());
+            var product = model.ToEntity(new Product());
             context.Product.Add(product);
             context.SaveChanges();
 

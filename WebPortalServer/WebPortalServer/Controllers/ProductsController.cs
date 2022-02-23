@@ -31,9 +31,17 @@ namespace WebPortalServer.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ProductModel> Get(int id)
+        public async Task<ActionResult<ProductModel>> Get(int id)
         {
-            return new ProductModel(await context.Product.FirstOrDefaultAsync(x => x.Id == id));
+            try
+            {
+                var product = new ProductModel(await context.Product.FirstOrDefaultAsync(x => x.Id == id));
+                return Ok(product);
+            }
+            catch
+            {
+                return BadRequest(new ModelError("id", "Invalid id"));
+            }
         }
 
         [HttpPost]

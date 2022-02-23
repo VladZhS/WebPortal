@@ -16,11 +16,7 @@ namespace WebPortalServer.Services
 
         public Customer CreateCustomer(CustomerModel model)
         {
-            var customer = context.Customer.FirstOrDefault(x => x.Id == model.Id);
-            if (customer != null)
-                throw new InvalidOperationException();
-
-            customer = model.ToEntity(new Customer());
+            var customer = model.ToEntity(new Customer());
 
             context.Customer.Add(customer);
             context.SaveChanges();

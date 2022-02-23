@@ -42,18 +42,30 @@ namespace WebPortalServer.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<OrderModel> Get(int id)
+        public async Task<ActionResult<OrderModel>> Get(int id)
         {
-            return new OrderModel(await context.Order
-                .Where(x => !x.Archived)
-                .FirstOrDefaultAsync(x => x.Id == id));
+            try
+            {
+                var order = new OrderModel(await context.Order.FirstOrDefaultAsync(x => x.Id == id));
+                return Ok(order);
+            }
+            catch
+            {
+                return BadRequest(new ModelError("id", "Invalid id"));
+            }
         }
         [HttpGet("archived/{id}")]
-        public async Task<OrderModel> GetArchived(int id)
+        public async Task<ActionResult<OrderModel>> GetArchived(int id)
         {
-            return new OrderModel(await context.Order
-                .Where(x => x.Archived)
-                .FirstOrDefaultAsync(x => x.Id == id));
+            try
+            {
+                var order = new OrderModel(await context.Order.FirstOrDefaultAsync(x => x.Id == id));
+                return Ok(order);
+            }
+            catch
+            {
+                return BadRequest(new ModelError("id", "Invalid id"));
+            }
         }
 
         [HttpPost]

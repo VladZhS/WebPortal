@@ -21,6 +21,7 @@ namespace WebPortalServer.Model.WebEnities
 
         public Customer ToEntity(Customer customer)
         {
+            customer.Id = Id;
             customer.Name = Name;
             customer.Address = Address;
             return customer;

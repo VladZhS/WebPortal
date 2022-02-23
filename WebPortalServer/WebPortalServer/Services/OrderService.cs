@@ -102,7 +102,7 @@ namespace WebPortalServer.Services
 
                     tran.Commit();
                 }
-                catch (Exception ex) 
+                catch
                 { 
                     tran.Rollback();
                     throw; 
