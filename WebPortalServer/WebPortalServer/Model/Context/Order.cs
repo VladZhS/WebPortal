@@ -18,6 +18,7 @@ namespace WebPortalServer
         public DateTime Date { get; set; }
         public int StatusId { get; set; }
         public int CustomerId { get; set; }
+        public bool Archived { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual OrderStatus Status { get; set; }

@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebPortalServer.Services;
+using WebPortalServer.Services.Validators;
 
 namespace WebPortalServer
 {
@@ -29,6 +31,13 @@ namespace WebPortalServer
             services.AddControllers();
             services.AddDbContext<WebPortalDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("WebPortalDB")));
+
+            services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<ICustomerValidator, CustomerValidator>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IProductValidator, ProductValidator>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IOrderValidator, OrderValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

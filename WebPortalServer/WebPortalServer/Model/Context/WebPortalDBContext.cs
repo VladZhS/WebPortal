@@ -26,7 +26,6 @@ namespace WebPortalServer
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductCategory> ProductCategory { get; set; }
         public virtual DbSet<ProductSize> ProductSize { get; set; }
-
         /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -52,41 +51,40 @@ namespace WebPortalServer
 
             modelBuilder.Entity<Order>(entity =>
             {
-
                 entity.Property(e => e.Date).HasColumnType("date");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Order__CustomerI__46E78A0C");
+                    .HasConstraintName("FK__Order__CustomerI__59063A47");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.StatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Order__StatusId__34C8D9D1");
+                    .HasConstraintName("FK__Order__StatusId__5812160E");
             });
 
             modelBuilder.Entity<OrderProduct>(entity =>
             {
+                entity.Property(e => e.Quantity).HasDefaultValueSql("((1))");
 
                 entity.HasOne(d => d.Oder)
                     .WithMany(p => p.OrderProduct)
                     .HasForeignKey(d => d.OderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderProd__OderI__36B12243");
+                    .HasConstraintName("FK__OrderProd__OderI__59FA5E80");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderProduct)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderProd__Produ__37A5467C");
+                    .HasConstraintName("FK__OrderProd__Produ__5AEE82B9");
             });
 
             modelBuilder.Entity<OrderStatus>(entity =>
             {
-
                 entity.Property(e => e.Status)
                     .IsRequired()
                     .HasMaxLength(10)
@@ -95,7 +93,6 @@ namespace WebPortalServer
 
             modelBuilder.Entity<Product>(entity =>
             {
-
                 entity.Property(e => e.CreationDate)
                     .IsRequired()
                     .HasMaxLength(10)
@@ -111,18 +108,17 @@ namespace WebPortalServer
                     .WithMany(p => p.Product)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Product__Categor__38996AB5");
+                    .HasConstraintName("FK__Product__Categor__5BE2A6F2");
 
                 entity.HasOne(d => d.Size)
                     .WithMany(p => p.Product)
                     .HasForeignKey(d => d.SizeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Product__SizeId__398D8EEE");
+                    .HasConstraintName("FK__Product__SizeId__5CD6CB2B");
             });
 
             modelBuilder.Entity<ProductCategory>(entity =>
             {
-
                 entity.Property(e => e.Category)
                     .IsRequired()
                     .HasMaxLength(10);
@@ -130,7 +126,6 @@ namespace WebPortalServer
 
             modelBuilder.Entity<ProductSize>(entity =>
             {
-
                 entity.Property(e => e.Size)
                     .IsRequired()
                     .HasMaxLength(10)
