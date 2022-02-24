@@ -1,7 +1,9 @@
 export class CustomerModel {
-    constructor(public customerName: string,
-         public customerAddres: string,
-         public totalOrderedCost: number,
-         public ordersCount: number
-         ){}
+    constructor(
+        public customerId: number,
+        public customerName: string,
+        public customerAddress: string,
+        public totalOrderedCost: number,
+        public ordersCount: number
+        ){}
 }

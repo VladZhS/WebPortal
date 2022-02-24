@@ -16,10 +16,10 @@
             </thead>
             <tbody>
               <tr *ngFor="let customer of customers">
-                <td >{{customer.customerName}}</td>
-                <td>{{customer.customerAddres}}</td>
-                <td>{{customer.totalOrderedCost}}</td>
-                <td>{{customer.ordersCount}}</td>
+                <td >{{customer?.customerName || "Name"}}</td>
+                <td>{{customer?.customerAddress || "Address"}}</td>
+                <td>{{customer?.totalOrderedCost}}</td>
+                <td>{{customer?.ordersCount}}</td>
               </tr>
             
             </tbody>

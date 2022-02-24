@@ -4,6 +4,7 @@ export class ProductModel{
          public productName: string, 
          public productCategory: string,
          public productSize: string,
+         public orderedQuantity: number,
          public quantity: number,
          public price: number,
          public description: string,

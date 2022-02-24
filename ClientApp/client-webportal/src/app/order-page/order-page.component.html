@@ -16,9 +16,9 @@
             </thead>
             <tbody>
               <tr *ngFor="let order of orders">
-                <td ><a href="#">{{order.orderNumber}}</a></td>
-                <td>{{order.customerName}}</td>
-                <td>{{order.customerAddres}}</td>
+                <td ><a [routerLink]="['view-order', order.orderNumber]">{{order.orderNumber}}</a></td>
+                <td>{{order.customer.customerName}}</td>
+                <td>{{order.customer.customerAddress}}</td>
                 <td>{{order.totalCost}}</td>
                 <td>{{order.status}}</td>
               </tr>

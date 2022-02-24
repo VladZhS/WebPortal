@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AlertService } from 'src/app/alert/alert.service';
 
 import { ProductModel } from 'src/app/shared/product-model';
 import { ProductService } from '../product-service';
@@ -26,7 +27,7 @@ export class NewProductPageComponent implements OnInit {
   categories: string[] = ["Foods","Drinks","Desserts", "Ice Cream"]
   sizes: string[] = ["Small", "Medium","Big"]
 
-  constructor(private productService: ProductService, private route: ActivatedRoute) { }
+  constructor(private productService: ProductService, private route: ActivatedRoute, private alertService: AlertService) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'] 
@@ -46,15 +47,28 @@ export class NewProductPageComponent implements OnInit {
   }
  
   onSave(productName: string, description: string){
- 
-    this.product = new ProductModel(this.productId, productName,this.selectedValue,  this.selectedSize, this.qty.nativeElement.value, this.priceInputRef.nativeElement.value, description, this.createdDate)
-      if(this.creationStatus == "new") 
-      {
-        this.productService.addProduct(this.product)
+    try{
+      this.product = new ProductModel(this.productId, productName,this.selectedValue,  this.selectedSize,0, this.qty.nativeElement.value, this.priceInputRef.nativeElement.value, description, this.createdDate)
+      if(productName !== "" && this.selectedSize !== "" && this.selectedValue !== "" && this.qty.nativeElement.value != 0){
+        if(this.creationStatus == "new" ) 
+        {
+          this.productService.addProduct(this.product)
+          this.alertService.success("New product successfully added ")
+        }
+        else
+        {
+          this.productService.replaceProduct(this.product)
+          
+          this.alertService.success("Product successfully edited ")
+        }
       }
-      else
-      {
-        this.productService.replaceProduct(this.product)
+      else{
+        throw new Error("Values cannot be empty")
       }
+    }
+    catch(error){
+      if(error instanceof Error)
+      this.alertService.error(error.message)
+    }
   }
 }

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AlertService } from 'src/app/alert/alert.service';
 import { CustomerModel } from 'src/app/shared/customer-model';
-import { CustomerService } from '../customer.service';
+import { CustomerService } from '../customer-service';
 
 @Component({
   selector: 'app-new-customer-page',
@@ -12,16 +13,24 @@ export class NewCustomerPageComponent implements OnInit {
   createdDate: string = "12.03.2022"
 
 
-  @Input() product: CustomerModel
+  @Input() customer: CustomerModel
 
-  constructor(private productService: CustomerService) { }
+  constructor(private customerService: CustomerService, private alertService: AlertService) { }
 
   ngOnInit(): void {
-
+    
   }
   onSave(customerName: string, customerAddress: string){
-    this.product = new CustomerModel(customerName, customerAddress, 0, 0)
-    this.productService.addCustomer(this.product)
+    if(customerName !== "" && customerAddress !== ""){
+      
+      const customerId = Math.floor(Math.random()*10000000)
+      this.customer = new CustomerModel(customerId, customerName, customerAddress, 0, 0)
+      this.customerService.addCustomer(this.customer)
+      this.alertService.success("Added new customer with name " + customerName)
+    }
+    else{
+      this.alertService.error("Values cannot be empty")
+    }
   }
 
 }

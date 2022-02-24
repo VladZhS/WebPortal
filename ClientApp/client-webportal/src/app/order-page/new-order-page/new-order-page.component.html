@@ -9,13 +9,13 @@
             <p class="align-bottom" >Order Number: </p>
         </div>
         <div class="col-2">
-            <p class="align-bottom " ></p>
+            <p class="align-bottom " >{{orderID}}</p>
         </div>
         <div class="col-2">
             <p class="align-bottom" >Order Date: </p>
         </div>
         <div class="col-3">
-            <p class="align-bottom" ></p>
+            <p class="align-bottom" >{{createdDate}}</p>
         </div>
     </div>
     
@@ -25,10 +25,10 @@
         </div>
         <div class="col ">
             <div ngbDropdown class="d-inline-block">
-                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle #selectedValue>{{selectedValue}}</button>
+                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle >{{selectedCustomer?.customerName || "Select Customer"}}</button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                    <div *ngFor="let customer of customers;" >
-                        <button ngbDropdownItem id="option" on-click="selectedValue=category"></button>
+                    <div *ngFor="let customer of customersReceived;" >
+                        <button ngbDropdownItem id="option" on-click="selectedCustomer=customer">{{customer.customerName}}</button>
                    
                       </div>
                 </div>
@@ -42,15 +42,101 @@
         </div>
         <div class="col ">
             <div ngbDropdown class="d-inline-block">
-                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle >{{selectedValue  || "Select Status"}}</button>
+                <button class="btn btn-outline-primary" id="dropdownBa,
+                sic1" ngbDropdownToggle >{{selectedStatus  || "Select Status"}}</button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                    <div *ngFor="let category of categories;" >
-                        <button ngbDropdownItem id="option" on-click=""></button>
+                    <div *ngFor="let status of statuses;" >
+                            <button ngbDropdownItem id="option" on-click="selectedStatus=status">{{status}}</button>
                    
                       </div>
                 </div>
               </div>
         </div>
        
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            
+            <span class="align-middle">Total Cost:</span>
+        </div>
+        <div class="col-2">
+            
+            <span class="align-middle">{{totalCost}}</span>
+        </div>
+    </div>
+    <hr>
+    <div class="row mb-3 gx-0">
+        <div class="col-2">
+            
+            <strong class="align-middle">Add Product:</strong>
+        </div>
+        <div class="col-2">
+            
+            <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle >{{selectedProduct?.productName || "Select Product"}}</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <div *ngFor="let product of productsReceived;" >
+                        <button ngbDropdownItem id="option" on-click="selectedProduct=product">{{product.productName}}</button>
+                   
+                      </div>
+                </div>
+              </div>
+        </div>
+        <div class="col-2">
+            <span class="align-middle">Quantity:</span>
+        </div>
+        <div class="col-2">
+                <input 
+                type="number" 
+                id="amount" 
+                class="form-control"
+                [value]="0"
+                name="qty"
+                #qty
+               >
+        </div>
+        <div class="col-3 text-end">
+                <button class="btn btn-primary " type="submit" routerLinkActive="active" (click)="onAddProduct()" >Add Products To Order</button>
+           
+        </div>
+    </div>
+    <div class="card"> 
+        <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col"  *ngFor="let header of tableHeaders">{{header}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of productsSaved">
+                <td ><a [routerLink]="['/products/view-product', product.productId]">{{product.productId}}</a></td>
+                <td>{{product.productName}}</td>
+                <td>{{product.productCategory}}</td>
+                <td>{{product.productSize}}</td>
+                <td>{{product.quantity}}</td>
+                <td>{{product.price}}</td>
+              </tr>
+            
+            </tbody>
+          </table>
+    </div>
+    <div class="row  mt-3 gx-0">
+        <div class="col-2">
+            <span >Description: </span>
+        </div>
+        <div class="col-4">
+            <div class="input-group mb-3">
+                <textarea class="form-control" name="description" placeholder="Type here"aria-label="With textarea" #description></textarea> </div>
+        </div>
+    </div>
+    <div class="row  mb-3 ">
+        <div class="col-10  text-end ">
+            <button class="btn btn-primary" type="submit" routerLinkActive="active" (click)="onSave(description.value)">Save</button>
+       
+        </div>
+        <div class="col-1   text-end">
+            <button class="btn btn-primary " type="submit" routerLinkActive="active" routerLink="/orders"  >Cancel</button>
+       
+        </div>
     </div>
        

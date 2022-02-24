@@ -4,7 +4,7 @@ import { ProductModel } from 'src/app/shared/product-model';
 import { ProductService } from '../product-service';
 
 @Component({
-  selector: 'app-view-product',
+  selector: 'view-product',
   templateUrl: './view-product.component.html',
   styleUrls: ['./view-product.component.css']
 })
