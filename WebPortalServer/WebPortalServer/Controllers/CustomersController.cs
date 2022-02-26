@@ -80,13 +80,12 @@ namespace WebPortalServer.Controllers
         {
             try
             {
-                return Accepted(new CustomerModel(service.DeleteCustomer(id)));
+                var customer = service.DeleteCustomer(id);
+                return Accepted(new CustomerModel(customer));
             }
             catch
             {
-                var error = new ModelError();
-                error.AddError("id", "Invalid id");
-                return BadRequest(error);
+                return BadRequest(new ModelError("id", "Invalid id"));
             }
         }
     }

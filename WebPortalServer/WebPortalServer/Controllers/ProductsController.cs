@@ -66,18 +66,17 @@ namespace WebPortalServer.Controllers
             return Accepted(new ProductModel(customer));
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public ActionResult<ProductModel> Delete(int id)
         {
             try
             {
-                return Accepted(new ProductModel(service.DeleteProduct(id)));
+                var product = service.DeleteProduct(id);
+                return Accepted(new ProductModel(product));
             }
             catch
             {
-                var error = new ModelError();
-                error.AddError("id", "Invalid id");
-                return BadRequest(error);
+                return BadRequest(new ModelError("id", "Invalid id"));
             }
         }
     }

@@ -13,11 +13,11 @@ namespace WebPortalServer.Services.Validators
             {
                 if (customer.Name == null)
                     error.AddError("name", "Name can't be null");
-                if (customer.Name == "")
+                else if (customer.Name == "")
                     error.AddError("name", "Name can't be empty");
                 if (customer.Address == null)
                     error.AddError("name", "Address can't be null");
-                if (customer.Address == "")
+                else if (customer.Address == "")
                     error.AddError("name", "Address can't be empty");
             }
 

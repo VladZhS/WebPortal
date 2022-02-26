@@ -122,7 +122,8 @@ namespace WebPortalServer.Controllers
         {
             try
             {
-                return Accepted(new OrderModel(service.DeleteOrder(id)));
+                var order = service.DeleteOrder(id);
+                return Accepted(new OrderModel(order));
             }
             catch (Exception ex)
             {
@@ -135,7 +136,8 @@ namespace WebPortalServer.Controllers
         {
             try
             {
-                return Accepted(new OrderModel(service.ArchiveOrder(id)));
+                var order = service.ArchiveOrder(id);
+                return Accepted(new OrderModel(order));
             }
             catch (Exception ex)
             {

@@ -8,5 +8,7 @@
         }
 
         public BaseModel() { }
+
+        public abstract T ToEntity(T entity);
     }
 }

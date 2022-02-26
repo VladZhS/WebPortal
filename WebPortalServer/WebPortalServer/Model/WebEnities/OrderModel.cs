@@ -8,7 +8,7 @@ namespace WebPortalServer.Model.WebEnities
     {
         public int Id { get; set; }
         public CustomerModel Customer { get; set; }
-        public OrderStatus Status { get; set; }
+        public StatusModel Status { get; set; }
         public decimal TotalCost { get; set; }
         public ICollection<ProductModel> Products { get; set; }
         public bool Archived { get; set; }
@@ -19,7 +19,7 @@ namespace WebPortalServer.Model.WebEnities
                 throw new ArgumentNullException();
             Id = order.Id;
             Customer = new CustomerModel(order.Customer);
-            Status = order.Status;
+            Status = new StatusModel(order.Status);
             TotalCost = order.OrderProduct.Sum(x => x.Product.Price * x.Quantity);
             Products = order.OrderProduct
                 .Select(x => x.Product)
@@ -27,11 +27,11 @@ namespace WebPortalServer.Model.WebEnities
             Archived = order.Archived;
         }
 
-        public Order ToEntity(Order order)
+        public override Order ToEntity(Order order)
         {
             order.Id = Id;
             order.Customer = Customer.ToEntity(order.Customer);
-            order.Status = Status;
+            order.Status = Status.ToEntity(order.Status);
             order.CustomerId = Customer.Id;
             order.StatusId = Status.Id;
             order.OrderProduct =

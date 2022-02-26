@@ -15,7 +15,7 @@ namespace WebPortalServer.Model.WebEnities
             Category = category.Category;
         }
 
-        public ProductCategory ToEntity(ProductCategory category)
+        public override ProductCategory ToEntity(ProductCategory category)
         {
             category.Id = Id;
             category.Category = Category;

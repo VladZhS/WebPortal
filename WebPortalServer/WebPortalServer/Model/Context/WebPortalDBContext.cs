@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -26,16 +28,7 @@ namespace WebPortalServer
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductCategory> ProductCategory { get; set; }
         public virtual DbSet<ProductSize> ProductSize { get; set; }
-        /*
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=WebPortalDB;Trusted_Connection=True;");
-            }
-        }
-        */
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>(entity =>
@@ -133,8 +126,51 @@ namespace WebPortalServer
             });
 
             OnModelCreatingPartial(modelBuilder);
+
+            //base.OnModelCreating(modelBuilder);
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        void OnModelCreatingPartial(ModelBuilder modelBuilder)
+        {
+            SetupSizes(modelBuilder);
+            SetupStatuses(modelBuilder);
+            SetupCategories(modelBuilder);
+
+
+        }
+
+        void SetupSizes(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProductSize>().HasData(
+                new ProductSize[]
+                {
+                    new ProductSize { Id = 1, Size = "Tiny" },
+                    new ProductSize { Id = 2, Size = "Small" },
+                    new ProductSize { Id = 3, Size = "Medium" },
+                    new ProductSize { Id = 4, Size = "Big" },
+                    new ProductSize { Id = 5, Size = "Large" },
+                });
+        }
+
+        void SetupStatuses(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<OrderStatus>().HasData(
+                new OrderStatus[]
+                {
+                    new OrderStatus { Id = 1, Status = "New" },
+                    new OrderStatus { Id = 2, Status = "Processing" },
+                    new OrderStatus { Id = 3, Status = "Delivering" },
+                    new OrderStatus { Id = 4, Status = "Done" },
+                });
+        }
+
+        void SetupCategories(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProductCategory>().HasData(
+                new ProductCategory[]
+                {
+                    //new ProductCategory { Id = 1, Category = "" },
+                });
+        }
     }
 }

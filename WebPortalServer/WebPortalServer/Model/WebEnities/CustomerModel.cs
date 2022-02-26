@@ -19,7 +19,7 @@ namespace WebPortalServer.Model.WebEnities
             Address = customer.Address;
         }
 
-        public Customer ToEntity(Customer customer)
+        public override Customer ToEntity(Customer customer)
         {
             customer.Id = Id;
             customer.Name = Name;

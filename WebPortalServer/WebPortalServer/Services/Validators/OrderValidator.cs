@@ -27,11 +27,11 @@ namespace WebPortalServer.Services.Validators
                 {
                     if (order.Customer.Name == null)
                         error.AddError("customer", "Customer's name can't be null");
-                    if (order.Customer.Name == "")
+                    else if (order.Customer.Name == "")
                         error.AddError("customer", "Customer's name can't be empty");
                     if (order.Customer.Address == null)
                         error.AddError("address", "Customer's address can't be null");
-                    if (order.Customer.Address == "")
+                    else if (order.Customer.Address == "")
                         error.AddError("address", "Customer's address can't be empty");
                 }
                 if (order.Status == null)

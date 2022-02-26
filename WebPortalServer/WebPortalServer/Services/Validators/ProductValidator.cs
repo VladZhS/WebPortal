@@ -22,11 +22,11 @@ namespace WebPortalServer.Services.Validators
             {
                 if (product.Name == null)
                     error.AddError("name", "Name can't be null");
-                if (product.Name == "")
+                else if (product.Name == "")
                     error.AddError("name", "Name can't be empty");
                 if (product.Price <= 0)
                     error.AddError("price", "Price can't be less or equal to zero");
-                if (product.Quantity < 0)
+                else if (product.Quantity < 0)
                     error.AddError("quantity", "Quantity can't be less than zero");
                 if (product.Category == null)
                     error.AddError("category", "Category can't be null");
