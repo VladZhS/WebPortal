@@ -1,0 +1,113 @@
+
+    <div class="row mb-3">
+        <div class="col">
+            <strong style="color: rgb(65, 65, 255)">{{creationStatus == 'new' ? 'New Product' : 'Edit Product'}}</strong>
+        </div>
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            <p class="align-bottom" >Product Number: </p>
+        </div>
+        <div class="col-2">
+            <p class="align-bottom " >{{productId}}</p>
+        </div>
+        <div class="col-2">
+            <p class="align-bottom" >Created Date: </p>
+        </div>
+        <div class="col-3">
+            <p class="align-bottom" >{{createdDate}}</p>
+        </div>
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2" >
+            <span class="align-middle">Product Name:</span>
+        </div>
+        <div class="col-3">
+            <div class="input-group mb-3">
+                <input type="text" name="productName" class="form-control" placeholder="Name" aria-label="Username" aria-describedby="basic-addon1" [value]="creationStatus == 'new' ? '' : product.productName"  #productName>
+              </div>
+        </div>
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            <span class="align-middle">Product Category: </span>
+        </div>
+        <div class="col ">
+            <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle >{{selectedValue  || "Select Category"}}</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <div *ngFor="let category of categories;" >
+                        <button ngbDropdownItem id="option" on-click="selectedValue=category">{{category}}</button>
+                   
+                      </div>
+                </div>
+              </div>
+        </div>
+       
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            <span class="align-middle">Product Size: </span>
+        </div>
+        <div class="col ">
+            <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{selectedSize  || "Select Size"}}</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <div *ngFor="let size of sizes;" >
+                        <button ngbDropdownItem id="option" on-click="selectedSize=size">{{size}}</button>
+                   
+                      </div>
+                </div>
+              </div>
+        </div>
+       
+    </div>
+    <div class="row mb-3 gx-0">
+        <div class="col-2">
+            <span class="align-middle">Available Quantity: </span>
+        </div>
+        <div class="col-2">
+                <input 
+                type="number" 
+                id="amount" 
+                class="form-control"
+                [value]="creationStatus == 'new' ? '0' : product.quantity"
+                name="qty"
+                #qty
+               >
+        </div>
+    </div>
+    <div class="row mb-3 gx-0">
+        <div class="col-2">
+            <span class="align-middle">Price: </span>
+        </div>
+        <div class="col-2">
+                <input 
+                type="number" 
+                id="amount" 
+                class="form-control"
+                name="price"
+                [value]="creationStatus == 'new' ? '0' : product.price"
+                #price
+               >
+        </div>
+    </div>
+    <div class="row  mb-3 gx-0">
+        <div class="col-2">
+            <span >Description: </span>
+        </div>
+        <div class="col-4">
+            <div class="input-group mb-3">
+                <textarea class="form-control" name="description" placeholder="Type here"aria-label="With textarea" #description>{{creationStatus == 'new' ? '' : product.description}}</textarea> </div>
+        </div>
+    </div>
+    <div class="row  mb-3 ">
+        <div class="col-10  text-end ">
+            <button class="btn btn-primary" type="submit" routerLinkActive="active"  (click)="onSave(productName.value, description.value)">{{creationStatus == 'new' ? 'Save' : 'Edit'}}</button>
+       
+        </div>
+        <div class="col-1   text-end">
+            <button class="btn btn-primary " type="submit" routerLinkActive="active" routerLink="/products"  >Cancel</button>
+       
+        </div>
+    </div>

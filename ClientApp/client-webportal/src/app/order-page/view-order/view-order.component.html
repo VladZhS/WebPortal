@@ -1,0 +1,86 @@
+
+    <div class="row mb-3">
+        <div class="col">
+            <strong style="color: rgb(65, 65, 255)">New Order</strong>
+        </div>
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            <p class="align-bottom" >Order Number: </p>
+        </div>
+        <div class="col-2">
+            <p class="align-bottom " >{{order.orderNumber}}</p>
+        </div>
+        <div class="col-2">
+            <p class="align-bottom" >Order Date: </p>
+        </div>
+        <div class="col-3">
+            <p class="align-bottom" >{{order.orderCreatedDate}}</p>
+        </div>
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            <span class="align-middle">Customer: </span>
+        </div>
+        <div class="col-3">
+            <p class="align-bottom" >{{order.customer.customerName}}</p>
+        </div>
+       
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            <span class="align-middle">Status: </span>
+        </div>
+        <div class="col-3">
+            <p class="align-bottom" >{{order.status}}</p>
+        </div>
+       
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            
+            <span class="align-middle">Total Cost:</span>
+        </div>
+        <div class="col-2">
+            
+            <span class="align-middle">{{order.totalCost}}</span>
+        </div>
+    </div>
+    <hr>
+    <div class="row mb-3 gx-0">
+        <div class="col-2">
+            <span class="align-middle">Order Products:</span>
+        </div>
+       
+       
+    </div>
+    <div class="row mb-3 gx-0">
+        <div class="col">
+            <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col"  *ngFor="let header of tableHeaders">{{header}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let product of order.products">
+                    <td ><a [routerLink]="['/products/view-product', product.productId]">{{product.productId}}</a></td>
+                    <td>{{product.productName}}</td>
+                    <td>{{product.productCategory}}</td>
+                    <td>{{product.productSize}}</td>
+                    <td>{{product.quantity}}</td>
+                    <td>{{product.price}}</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+    <div class="row  mt-3 gx-0">
+        <div class="col-2">
+            <span >Description: </span>
+        </div>
+        <div class="col-4">
+            <span>{{order.description}}</span>
+        </div>
+    </div>
+       

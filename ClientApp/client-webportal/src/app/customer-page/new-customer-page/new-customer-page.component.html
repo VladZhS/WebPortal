@@ -1,0 +1,43 @@
+
+    <div class="row mb-3">
+        <div class="col">
+            <strong style="color: rgb(65, 65, 255)">New Customer</strong>
+        </div>
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            <p class="align-bottom" >Created Date: </p>
+        </div>
+        <div class="col-3">
+            <p class="align-bottom" >{{createdDate}}</p>
+        </div>
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2" >
+            <span class="align-middle">Customer Name:</span>
+        </div>
+        <div class="col-3">
+            <div class="input-group mb-3">
+                <input type="text" name="productName" class="form-control" placeholder="Name" aria-label="Username" aria-describedby="basic-addon1" #customerName>
+              </div>
+        </div>
+    </div>
+    <div class="row  mb-3 gx-0">
+        <div class="col-2">
+            <span >Address: </span>
+        </div>
+        <div class="col-4">
+            <div class="input-group mb-3">
+                <textarea class="form-control" name="description" placeholder="Type here"aria-label="With textarea" #address></textarea> </div>
+        </div>
+    </div>
+    <div class="row  mb-3 ">
+        <div class="col-10  text-end ">
+            <button class="btn btn-primary" type="submit" routerLinkActive="active" (click)="onSave(customerName.value, address.value)">Save</button>
+       
+        </div>
+        <div class="col-1   text-end">
+            <button class="btn btn-primary " type="submit" routerLinkActive="active" routerLink="/products"  >Cancel</button>
+       
+        </div>
+    </div>

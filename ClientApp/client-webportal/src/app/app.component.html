@@ -1,0 +1,26 @@
+<div class="container p-2"><alert></alert></div>
+<div class="container-fluid h-100" >
+    <div class="container p-1">
+        <div class="card w-100 g-2 p-2" >
+            <div class="row gx-0">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link"  routerLinkActive="active" routerLink="/orders"
+        
+                      >Orders</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" routerLinkActive="active"  routerLink="/products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" routerLinkActive="active" routerLink="/customers">Customers</a>
+                    </li>
+                  </ul>
+            </div>
+            <hr class="mb-1">
+            <div class="card-body">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>
