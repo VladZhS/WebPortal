@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using WebPortalServer.Model.WebEnities;
 
 namespace WebPortalServer.Services.Validators
@@ -33,6 +34,14 @@ namespace WebPortalServer.Services.Validators
                         error.AddError("address", "Customer's address can't be null");
                     else if (order.Customer.Address == "")
                         error.AddError("address", "Customer's address can't be empty");
+                    if (order.Date == null)
+                        error.AddError("date", "Date can't be null");
+                    else
+                    {
+                        DateTime date = new DateTime();
+                        if (!DateTime.TryParse(order.Date, out date))
+                            error.AddError("date", "Ivalid date");
+                    }
                 }
                 if (order.Status == null)
                     error.AddError("status", "Status can't be null");

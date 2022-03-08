@@ -54,6 +54,13 @@ namespace WebPortalServer.Controllers
                 return BadRequest(new ModelError("id", "Invalid id"));
             }
         }
+        [HttpGet("byCustomer/{userId}")]
+        public async Task<IEnumerable<OrderModel>> GetByUser(int id)
+        {
+            return service.ConvertList(await context.Order
+                .Where(x => x.CustomerId == id)
+                .ToListAsync());
+        }
         [HttpGet("archived/{id}")]
         public async Task<ActionResult<OrderModel>> GetArchived(int id)
         {
@@ -104,6 +111,19 @@ namespace WebPortalServer.Controllers
                 return BadRequest(error);
             }
         }
+        [HttpDelete("archive/{id}")]
+        public ActionResult Remove(int id)
+        {
+            try
+            {
+                var order = service.ArchiveOrder(id);
+                return Accepted(new OrderModel(order));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ModelError("order", ex.Message));
+            }
+        }
         [HttpPut("unarchive/{id}")]
         public ActionResult Unarchive(int id)
         {
@@ -131,18 +151,6 @@ namespace WebPortalServer.Controllers
             }
         }
 
-        [HttpDelete("archive/{id}")]
-        public ActionResult Remove(int id)
-        {
-            try
-            {
-                var order = service.ArchiveOrder(id);
-                return Accepted(new OrderModel(order));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ModelError("order", ex.Message));
-            }
-        }
+        
     }
 }

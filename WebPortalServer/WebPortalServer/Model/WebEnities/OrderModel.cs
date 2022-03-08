@@ -10,6 +10,7 @@ namespace WebPortalServer.Model.WebEnities
         public CustomerModel Customer { get; set; }
         public StatusModel Status { get; set; }
         public decimal TotalCost { get; set; }
+        public string Date { get; set; }
         public ICollection<ProductModel> Products { get; set; }
         public bool Archived { get; set; }
         public OrderModel() { }
@@ -21,6 +22,7 @@ namespace WebPortalServer.Model.WebEnities
             Customer = new CustomerModel(order.Customer);
             Status = new StatusModel(order.Status);
             TotalCost = order.OrderProduct.Sum(x => x.Product.Price * x.Quantity);
+            Date = order.Date.Date.ToString();
             Products = order.OrderProduct
                 .Select(x => x.Product)
                 .ConvertModel<Product, ProductModel>();
@@ -32,6 +34,9 @@ namespace WebPortalServer.Model.WebEnities
             order.Id = Id;
             order.Customer = Customer.ToEntity(order.Customer);
             order.Status = Status.ToEntity(order.Status);
+            DateTime date = new DateTime();
+            DateTime.TryParse(Date, out date);
+            order.Date = date;
             order.CustomerId = Customer.Id;
             order.StatusId = Status.Id;
             order.OrderProduct =
