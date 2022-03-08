@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderModel } from '../shared/order-model';
+import { OrderModel } from '../models/order.model';
 import { OrderService } from './order-service';
 
 @Component({
@@ -10,7 +10,7 @@ import { OrderService } from './order-service';
 export class OrderPageComponent implements OnInit {
   orders: OrderModel[]
   tableHeaders = ["Order Number", "Customer Name", "Customer Addres", "Total Cost", "Status"]
-  
+
 
   constructor(private orderService: OrderService) { }
 

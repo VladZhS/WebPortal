@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProductModel } from '../shared/product-model';
+import { ProductModel } from '../models/product.model';
 import { ProductService } from './product-service';
 
-@Component({selector: 'somecontet',  template: `
+@Component({
+  selector: 'somecontet', template: `
 <div class="modal-header">
   <h4 class="modal-title">Are you sure?</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
@@ -16,7 +17,7 @@ import { ProductService } from './product-service';
 })
 export class NgbdModalContent {
 
-  constructor(public activeModal: NgbActiveModal) {}
+  constructor(public activeModal: NgbActiveModal) { }
 }
 @Component({
   selector: 'app-product-page',
@@ -27,20 +28,20 @@ export class ProductPageComponent implements OnInit {
   products: ProductModel[];
   tableHeaders: string[] = ["Product id", "Product Name", "Product Category", "Product Size", "Quantity", "Price", "Action"]
 
-  constructor(private productService: ProductService, private modalService: NgbModal) { 
+  constructor(private productService: ProductService, private modalService: NgbModal) {
 
   }
 
-  async onDelete(index: number){
+  async onDelete(index: number) {
     const modalRef = this.modalService.open(NgbdModalContent);
-    if(await modalRef.result){
-    this.productService.deleteProduct(index)
-    this.products = this.productService.getProducts();
+    if (await modalRef.result) {
+      this.productService.deleteProduct(index)
+      this.products = this.productService.getProducts();
     }
   }
 
   ngOnInit(): void {
-   
+
 
     this.products = this.productService.getProducts();
   }
