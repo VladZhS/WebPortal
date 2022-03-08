@@ -1,16 +1,16 @@
-import { OrderModel } from "../shared/order-model";
+import { OrderModel } from "../models/order.model";
 
-export class OrderService{
-    orders: OrderModel[]= []
+export class OrderService {
+    orders: OrderModel[] = []
 
-    getOrders(){
+    getOrders() {
         return this.orders?.slice()
     }
-    addOrder(order: OrderModel){
+    addOrder(order: OrderModel) {
         this.orders?.push(order)
     }
-    getOrderById(id: number){
+    getOrderById(id: number) {
         return this.orders.find(x => x.orderNumber == id);
     }
-    
+
 }

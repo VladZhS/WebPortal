@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomerModel } from '../shared/customer-model';
+import { CustomerModel } from '../models/customer.model';
 import { CustomerService } from './customer-service';
 
 @Component({
@@ -8,7 +8,7 @@ import { CustomerService } from './customer-service';
   styleUrls: ['./customer-page.component.css']
 })
 export class CustomerPageComponent implements OnInit {
-  customers: CustomerModel[] 
+  customers: CustomerModel[]
   tableHeaders: string[] = ["Customer Name", "Customer Address", "Total Ordered Cost", "Orders Count"]
 
   constructor(private customerService: CustomerService) { }
