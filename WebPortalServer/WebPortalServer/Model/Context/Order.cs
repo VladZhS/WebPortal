@@ -21,8 +21,8 @@ namespace WebPortalServer
         public string Description { get; set; }
         public bool Archived { get; set; }
 
-        public virtual Customer Customer { get; set; } = new Customer();
-        public virtual OrderStatus Status { get; set; } = new OrderStatus();
+        public virtual Customer Customer { get; set; }
+        public virtual OrderStatus Status { get; set; }
         public virtual ICollection<OrderProduct> OrderProduct { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace WebPortalServer
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
+        public DateTime CreationDate { get; set; }
 
         public virtual ICollection<Order> Order { get; set; }
     }

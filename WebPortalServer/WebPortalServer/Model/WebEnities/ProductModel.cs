@@ -9,6 +9,7 @@ namespace WebPortalServer.Model.WebEnities
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }
+        public string CreationDate { get; set; }
 
         public virtual CategoryModel Category { get; set; }
         public virtual SizeModel Size { get; set; }
@@ -23,6 +24,7 @@ namespace WebPortalServer.Model.WebEnities
             Quantity = product.Quantity;
             Price = product.Price;
             Description = product.Description;
+            CreationDate = product.CreationDate.Date.ToString();
             Category = new CategoryModel(product.Category);
             Size = new SizeModel(product.Size);
         }
@@ -34,6 +36,9 @@ namespace WebPortalServer.Model.WebEnities
             product.Quantity = Quantity;
             product.Price = Price;
             product.Description = Description;
+            DateTime date = new DateTime();
+            DateTime.TryParse(CreationDate, out date);
+            product.CreationDate = date;
             product.Category = Category.ToEntity(product.Category);
             product.Size = Size.ToEntity(product.Size);
             product.CategoryId = Category.Id;

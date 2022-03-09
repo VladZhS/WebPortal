@@ -60,9 +60,17 @@ namespace WebPortalServer.Controllers
             ModelError error = validator.IsValid(model);
             if (error.Count > 0)
                 return BadRequest(error);
-
-            var category = service.UpdateCategory(model);
-            return Accepted(new CategoryModel(category));
+            
+            try
+            { 
+                var category = service.UpdateCategory(model);
+                return Accepted(new CategoryModel(category));
+            }
+            catch
+            {
+                error.AddError("id", "Invalid id");
+                return BadRequest(error);
+            }
         }
 
         [HttpDelete("{id}")]

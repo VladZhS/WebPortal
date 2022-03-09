@@ -19,7 +19,14 @@ namespace WebPortalServer.Services
         {
             order.Archived = false;
 
+            var status = context.OrderStatus.FirstOrDefault(x => x.Id == order.Status.Id);
+
+            context.Entry(status).State = EntityState.Detached;
+
             context.Order.Add(order);
+
+            context.Entry(context.OrderStatus.FirstOrDefault(x => x.Id == order.Status.Id)).State = EntityState.Modified;
+
             context.SaveChanges();
         }
 
@@ -91,7 +98,11 @@ namespace WebPortalServer.Services
         }
         public Order CreateOrder(OrderModel model)
         {
-            var order = model.ToEntity(new Order());
+            var order = model.ToEntity(
+                new Order()
+                {
+                    Status = new OrderStatus()
+                });
 
             using (var tran = context.Database.BeginTransaction())
             {

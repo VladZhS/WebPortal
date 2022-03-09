@@ -62,8 +62,16 @@ namespace WebPortalServer.Controllers
             if (error.Count > 0)
                 return BadRequest(error);
 
-            var product = service.UpdateProduct(model);
-            return Accepted(new ProductModel(product));
+            try
+            {
+                var product = service.UpdateProduct(model);
+                return Accepted(new ProductModel(product));
+            }
+            catch
+            {
+                error.AddError("id", "Invalid id");
+                return BadRequest(error);
+            }
         }
 
         [HttpDelete("{id}")]

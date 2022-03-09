@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using WebPortalServer.Model.WebEnities;
 
 namespace WebPortalServer.Services.Validators
@@ -36,6 +37,14 @@ namespace WebPortalServer.Services.Validators
                     error.AddError("size", "Size can't be null");
                 else if (context.ProductSize.FirstOrDefault(x => x.Id == product.Size.Id) == null)
                     error.AddError("size", "Invalid size");
+                if (product.CreationDate == null)
+                    error.AddError("date", "Date can't be null");
+                else
+                {
+                    DateTime date = new DateTime();
+                    if (!DateTime.TryParse(product.CreationDate, out date))
+                        error.AddError("date", "Ivalid date");
+                }
             }
 
             return error;

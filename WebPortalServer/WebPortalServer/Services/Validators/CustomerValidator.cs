@@ -1,4 +1,5 @@
-﻿using WebPortalServer.Model.WebEnities;
+﻿using System;
+using WebPortalServer.Model.WebEnities;
 
 namespace WebPortalServer.Services.Validators
 {
@@ -19,6 +20,14 @@ namespace WebPortalServer.Services.Validators
                     error.AddError("name", "Address can't be null");
                 else if (customer.Address == "")
                     error.AddError("name", "Address can't be empty");
+                if (customer.CreationDate == null)
+                    error.AddError("date", "Date can't be null");
+                else
+                {
+                    DateTime date = new DateTime();
+                    if (!DateTime.TryParse(customer.CreationDate, out date))
+                        error.AddError("date", "Ivalid date");
+                }
             }
 
             return error;

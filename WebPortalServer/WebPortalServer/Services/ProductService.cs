@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebPortalServer.Model.WebEnities;
@@ -16,9 +17,26 @@ namespace WebPortalServer.Services
 
         public Product CreateProduct(ProductModel model)
         {
-            var product = model.ToEntity(new Product());
+            var product = model.ToEntity(
+                new Product()
+                {
+                    Category = new ProductCategory(),
+                    Size = new ProductSize()
+                });
+
+            var category = context.ProductCategory.
+                FirstOrDefault(x => x.Id == model.Category.Id);
+
+            var size = context.ProductSize.
+                FirstOrDefault(x => x.Id == model.Size.Id);
+
+            context.Entry(size).State = EntityState.Detached;
+            context.Entry(category).State = EntityState.Detached;
+
             context.Product.Add(product);
-            context.SaveChanges();
+
+            context.Entry(context.ProductSize.FirstOrDefault(x => x.Id == product.Size.Id)).State = EntityState.Modified;
+            context.Entry(context.ProductCategory.FirstOrDefault(x => x.Id == product.Category.Id)).State = EntityState.Modified;
 
             return product;
         }

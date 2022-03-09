@@ -19,12 +19,12 @@ namespace WebPortalServer
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }
-        public string CreationDate { get; set; }
+        public DateTime CreationDate { get; set; }
         public int CategoryId { get; set; }
         public int SizeId { get; set; }
 
-        public virtual ProductCategory Category { get; set; } = new ProductCategory();
-        public virtual ProductSize Size { get; set; } = new ProductSize();
+        public virtual ProductCategory Category { get; set; }
+        public virtual ProductSize Size { get; set; }
         public virtual ICollection<OrderProduct> OrderProduct { get; set; }
     }
 }

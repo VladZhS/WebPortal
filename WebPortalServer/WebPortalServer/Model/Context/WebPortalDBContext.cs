@@ -33,6 +33,8 @@ namespace WebPortalServer
         {
             modelBuilder.Entity<Customer>(entity =>
             {
+                entity.Property(e => e.CreationDate).HasColumnType("date");
+
                 entity.Property(e => e.Address)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -86,10 +88,7 @@ namespace WebPortalServer
 
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.Property(e => e.CreationDate)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                entity.Property(e => e.CreationDate).HasColumnType("date");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
