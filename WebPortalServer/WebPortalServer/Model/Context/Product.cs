@@ -23,8 +23,8 @@ namespace WebPortalServer
         public int CategoryId { get; set; }
         public int SizeId { get; set; }
 
-        public virtual ProductCategory Category { get; set; }
-        public virtual ProductSize Size { get; set; }
+        public virtual ProductCategory Category { get; set; } = new ProductCategory();
+        public virtual ProductSize Size { get; set; } = new ProductSize();
         public virtual ICollection<OrderProduct> OrderProduct { get; set; }
     }
 }

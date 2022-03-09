@@ -51,8 +51,8 @@ namespace WebPortalServer.Controllers
             if (error.Count > 0)
                 return BadRequest(error);
 
-            var customer = service.CreateProduct(model);
-            return Accepted(new ProductModel(customer));
+            var product = service.CreateProduct(model);
+            return Accepted(new ProductModel(product));
         }
 
         [HttpPut]
@@ -62,8 +62,8 @@ namespace WebPortalServer.Controllers
             if (error.Count > 0)
                 return BadRequest(error);
 
-            var customer = service.UpdateProduct(model);
-            return Accepted(new ProductModel(customer));
+            var product = service.UpdateProduct(model);
+            return Accepted(new ProductModel(product));
         }
 
         [HttpDelete("{id}")]

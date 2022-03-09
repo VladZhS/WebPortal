@@ -18,10 +18,11 @@ namespace WebPortalServer
         public DateTime Date { get; set; }
         public int StatusId { get; set; }
         public int CustomerId { get; set; }
+        public string Description { get; set; }
         public bool Archived { get; set; }
 
-        public virtual Customer Customer { get; set; }
-        public virtual OrderStatus Status { get; set; }
+        public virtual Customer Customer { get; set; } = new Customer();
+        public virtual OrderStatus Status { get; set; } = new OrderStatus();
         public virtual ICollection<OrderProduct> OrderProduct { get; set; }
     }
 }

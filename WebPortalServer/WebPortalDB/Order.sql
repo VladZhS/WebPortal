@@ -4,5 +4,6 @@
     [Date] DATE NOT NULL, 
     [StatusId] INT NOT NULL FOREIGN KEY REFERENCES OrderStatus(Id), 
     [CustomerId] INT NOT NULL FOREIGN KEY REFERENCES [Customer](Id), 
-    [Archived] BIT NOT NULL DEFAULT 0
+    [Description] NVARCHAR(MAX) NULL,
+    [Archived] BIT NOT NULL DEFAULT 0 
 )
