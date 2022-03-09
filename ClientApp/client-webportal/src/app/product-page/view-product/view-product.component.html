@@ -1,0 +1,81 @@
+
+    <div class="row mb-3">
+        <div class="col">
+            <strong style="color: rgb(65, 65, 255)">View Product</strong>
+        </div>
+        <div class="col"> 
+            <div class="col-1   text-end">
+                 <button class="btn btn-primary" [routerLink]="['/products/new-product/', product.productId]"  >Edit</button>      
+            </div>
+        </div>
+      
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            <p class="align-bottom" >Product Number: </p>
+        </div>
+        <div class="col-2">
+            <p class="align-bottom " >{{product.productId}}</p>
+        </div>
+        <div class="col-2">
+            <p class="align-bottom" >Created Date: </p>
+        </div>
+        <div class="col-3">
+            <p class="align-bottom" >{{product.createdDate}}</p>
+        </div>
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2" >
+            <span class="align-middle">Product Name:</span>
+        </div>
+        <div class="col-3">
+            <p class="align-bottom" >{{product.productName}}</p>
+        </div>
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            <span class="align-middle">Product Category: </span>
+        </div>
+        <div class="col ">
+            <div class="col-3">
+                <p class="align-bottom" >{{product.productCategory}}</p>
+            </div>
+        </div>
+       
+    </div>
+    <div class="row mb-2 gx-0">
+        <div class="col-2">
+            <span class="align-middle">Product Size: </span>
+        </div>
+        <div class="col ">
+            <div class="col-3">
+                <p class="align-bottom" >{{product.productSize}}</p>
+            </div>
+        </div>
+       
+    </div>
+    <div class="row mb-3 gx-0">
+        <div class="col-2">
+            <span class="align-middle">Available Quantity: </span>
+        </div>
+        <div class="col-2">
+            <p class="align-bottom" >{{product.quantity}}</p>
+        </div>
+    </div>
+    <div class="row mb-3 gx-0">
+        <div class="col-2">
+            <span class="align-middle">Price: </span>
+        </div>
+        <div class="col-2">
+            <p class="align-bottom" >{{product.price}}</p>
+        </div>
+    </div>
+    <div class="row  mb-3 gx-0">
+        <div class="col-2">
+            <span >Description: </span>
+        </div>
+        <div class="col-4">
+            <div class="input-group mb-3">
+                <textarea class="form-control" name="description" placeholder="Type here"aria-label="With textarea" #description>{{product.description}}</textarea> </div>
+        </div>
+    </div>

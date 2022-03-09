@@ -1,0 +1,28 @@
+
+    <div class="row mb-2">
+        <div class="col">
+            <strong class="align-bottom" style="color: rgb(65, 65, 255)">Orders</strong>
+        </div>
+        <div class="col text-end">
+            <button class="btn btn-primary" type="submit" routerLinkActive="active" routerLink="new-order" >New Order</button>
+        </div>
+    </div>
+    <div class="card"> 
+        <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col"  *ngFor="let header of tableHeaders">{{header}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of orders">
+                <td ><a [routerLink]="['view-order', order.orderNumber]">{{order.orderNumber}}</a></td>
+                <td>{{order.customer.customerName}}</td>
+                <td>{{order.customer.customerAddress}}</td>
+                <td>{{order.totalCost}}</td>
+                <td>{{order.status}}</td>
+              </tr>
+            
+            </tbody>
+          </table>
+    </div>

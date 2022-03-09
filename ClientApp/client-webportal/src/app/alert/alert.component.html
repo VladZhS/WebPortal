@@ -1,0 +1,4 @@
+<div *ngFor="let alert of alerts">
+    
+        <ngb-alert  [type]="alert.type" (click)="removeAlert(alert)">{{ alert.message }}</ngb-alert>
+</div>
