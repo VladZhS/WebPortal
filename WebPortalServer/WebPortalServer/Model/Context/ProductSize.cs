@@ -11,12 +11,9 @@ namespace WebPortalServer
     {
         public ProductSize()
         {
-            Product = new HashSet<Product>();
         }
 
         public int Id { get; set; }
         public string Size { get; set; }
-
-        public virtual ICollection<Product> Product { get; set; }
     }
 }

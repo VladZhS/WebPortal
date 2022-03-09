@@ -19,13 +19,9 @@ namespace WebPortalServer.Services
         {
             order.Archived = false;
 
-            var status = context.OrderStatus.FirstOrDefault(x => x.Id == order.Status.Id);
-
-            context.Entry(status).State = EntityState.Detached;
+            order.Status = null;
 
             context.Order.Add(order);
-
-            context.Entry(context.OrderStatus.FirstOrDefault(x => x.Id == order.Status.Id)).State = EntityState.Modified;
 
             context.SaveChanges();
         }

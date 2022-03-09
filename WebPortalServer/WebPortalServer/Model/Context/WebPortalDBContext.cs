@@ -96,17 +96,6 @@ namespace WebPortalServer
 
                 entity.Property(e => e.Price).HasColumnType("money");
 
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.Product)
-                    .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Product__Categor__5BE2A6F2");
-
-                entity.HasOne(d => d.Size)
-                    .WithMany(p => p.Product)
-                    .HasForeignKey(d => d.SizeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Product__SizeId__5CD6CB2B");
             });
 
             modelBuilder.Entity<ProductCategory>(entity =>

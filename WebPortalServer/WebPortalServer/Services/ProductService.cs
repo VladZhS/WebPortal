@@ -24,19 +24,12 @@ namespace WebPortalServer.Services
                     Size = new ProductSize()
                 });
 
-            var category = context.ProductCategory.
-                FirstOrDefault(x => x.Id == model.Category.Id);
-
-            var size = context.ProductSize.
-                FirstOrDefault(x => x.Id == model.Size.Id);
-
-            context.Entry(size).State = EntityState.Detached;
-            context.Entry(category).State = EntityState.Detached;
+            product.Category = null;
+            product.Size = null;
 
             context.Product.Add(product);
-
-            context.Entry(context.ProductSize.FirstOrDefault(x => x.Id == product.Size.Id)).State = EntityState.Modified;
-            context.Entry(context.ProductCategory.FirstOrDefault(x => x.Id == product.Category.Id)).State = EntityState.Modified;
+            
+            context.SaveChanges();
 
             return product;
         }
