@@ -97,7 +97,8 @@ namespace WebPortalServer.Services
             var order = model.ToEntity(
                 new Order()
                 {
-                    Status = new OrderStatus()
+                    Status = new OrderStatus(),
+                    Customer = new Customer()
                 });
 
             using (var tran = context.Database.BeginTransaction())
