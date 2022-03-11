@@ -46,5 +46,23 @@ namespace WebPortalServer.Model.WebEnities
 
             return product;
         }
+        /*
+         * used to safely update product
+         */
+        public Product ToEntitySafe(Product product)
+        {
+            product.Id = Id;
+            product.Name = Name;
+            product.Quantity = Quantity;
+            product.Price = Price;
+            product.Description = Description;
+            DateTime date = new DateTime();
+            DateTime.TryParse(CreationDate, out date);
+            product.CreationDate = date;
+            product.CategoryId = Category.Id;
+            product.SizeId = Size.Id;
+
+            return product;
+        }
     }
 }

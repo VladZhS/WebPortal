@@ -54,5 +54,17 @@ namespace WebPortalServer.Model.WebEnities
             order.Archived = Archived;
             return order;
         }
+        public Order ToEntitySafe(Order order)
+        {
+            order.Id = Id;
+            DateTime date = new DateTime();
+            DateTime.TryParse(Date, out date);
+            order.Date = date;
+            order.CustomerId = Customer.Id;
+            order.StatusId = Status.Id;
+            order.Description = Description;
+            order.Archived = Archived;
+            return order;
+        }
     }
 }
