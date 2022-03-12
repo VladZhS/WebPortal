@@ -29,10 +29,23 @@ namespace WebPortalServer.Controllers
         [HttpGet]
         public async Task<IEnumerable<OrderModel>> GetAll()
         {
-            var tmp = context.Order.ToList();
-            return service.ConvertList(await context.Order
-                .Where(x => !x.Archived)
-                .ToListAsync());
+            var tmp = await context.Order.Where(x => !x.Archived).ToListAsync();
+            
+            tmp.ForEach(order => {
+                order.Customer = context.Customer.FirstOrDefault(x => x.Id == order.CustomerId);
+                order.OrderProduct = context.OrderProduct.Where(x => x.OderId == order.Id).ToList();
+                foreach (var orderProduct in order.OrderProduct)
+                {
+                    orderProduct.Product = context.Product.FirstOrDefault(x => x.Id == orderProduct.Id);
+                }
+            }
+            );
+            
+            return service.ConvertList(tmp);
+
+            //return service.ConvertList(await context.Order
+            //    .Where(x => !x.Archived)
+            //    .ToListAsync());
         }
         [HttpGet("archived")]
         public async Task<IEnumerable<OrderModel>> GetAllArchived()

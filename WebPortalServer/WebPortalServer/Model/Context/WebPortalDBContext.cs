@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -29,15 +27,24 @@ namespace WebPortalServer
         public virtual DbSet<ProductCategory> ProductCategory { get; set; }
         public virtual DbSet<ProductSize> ProductSize { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=WebPortalDB;Trusted_Connection=True;");
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.Property(e => e.CreationDate).HasColumnType("date");
-
                 entity.Property(e => e.Address)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.CreationDate).HasColumnType("date");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -58,7 +65,7 @@ namespace WebPortalServer
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.StatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Order__StatusId__5812160E");
+                    .HasConstraintName("FK__Order__StatusId__34C8D9D1");
             });
 
             modelBuilder.Entity<OrderProduct>(entity =>
@@ -69,13 +76,13 @@ namespace WebPortalServer
                     .WithMany(p => p.OrderProduct)
                     .HasForeignKey(d => d.OderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderProd__OderI__59FA5E80");
+                    .HasConstraintName("FK__OrderProd__OderI__36B12243");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderProduct)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderProd__Produ__5AEE82B9");
+                    .HasConstraintName("FK__OrderProd__Produ__37A5467C");
             });
 
             modelBuilder.Entity<OrderStatus>(entity =>
@@ -100,13 +107,13 @@ namespace WebPortalServer
                     .WithMany(p => p.Product)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Product__Categor__5BE2A6F2");
+                    .HasConstraintName("FK__Product__Categor__38996AB5");
 
                 entity.HasOne(d => d.Size)
                     .WithMany(p => p.Product)
                     .HasForeignKey(d => d.SizeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Product__SizeId__5CD6CB2B");
+                    .HasConstraintName("FK__Product__SizeId__398D8EEE");
             });
 
             modelBuilder.Entity<ProductCategory>(entity =>
@@ -114,7 +121,6 @@ namespace WebPortalServer
                 entity.Property(e => e.Category)
                     .IsRequired()
                     .HasMaxLength(10);
-
             });
 
             modelBuilder.Entity<ProductSize>(entity =>
@@ -126,51 +132,8 @@ namespace WebPortalServer
             });
 
             OnModelCreatingPartial(modelBuilder);
-
-            //base.OnModelCreating(modelBuilder);
         }
 
-        void OnModelCreatingPartial(ModelBuilder modelBuilder)
-        {
-            SetupSizes(modelBuilder);
-            SetupStatuses(modelBuilder);
-            SetupCategories(modelBuilder);
-
-
-        }
-
-        void SetupSizes(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ProductSize>().HasData(
-                new ProductSize[]
-                {
-                    new ProductSize { Id = 1, Size = "Tiny" },
-                    new ProductSize { Id = 2, Size = "Small" },
-                    new ProductSize { Id = 3, Size = "Medium" },
-                    new ProductSize { Id = 4, Size = "Big" },
-                    new ProductSize { Id = 5, Size = "Large" },
-                });
-        }
-
-        void SetupStatuses(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<OrderStatus>().HasData(
-                new OrderStatus[]
-                {
-                    new OrderStatus { Id = 1, Status = "New" },
-                    new OrderStatus { Id = 2, Status = "Processing" },
-                    new OrderStatus { Id = 3, Status = "Delivering" },
-                    new OrderStatus { Id = 4, Status = "Done" },
-                });
-        }
-
-        void SetupCategories(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ProductCategory>().HasData(
-                new ProductCategory[]
-                {
-                    //new ProductCategory { Id = 1, Category = "" },
-                });
-        }
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

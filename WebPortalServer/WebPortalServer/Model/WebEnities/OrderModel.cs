@@ -24,7 +24,7 @@ namespace WebPortalServer.Model.WebEnities
             Status = new StatusModel(order.Status);
             TotalCost = order.OrderProduct.Sum(x => x.Product.Price * x.Quantity);
             Date = order.Date.Date.ToString();
-            Date = order.Description;
+            Description = order.Description;
             Products = order.OrderProduct
                 .Select(x => x.Product)
                 .ConvertModel<Product, ProductModel>();

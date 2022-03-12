@@ -18,6 +18,5 @@ namespace WebPortalServer
         public string Category { get; set; }
 
         public virtual ICollection<Product> Product { get; set; }
-
     }
 }
