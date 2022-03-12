@@ -29,6 +29,7 @@ namespace WebPortalServer.Controllers
         [HttpGet]
         public async Task<IEnumerable<OrderModel>> GetAll()
         {
+            var tmp = context.Order.ToList();
             return service.ConvertList(await context.Order
                 .Where(x => !x.Archived)
                 .ToListAsync());

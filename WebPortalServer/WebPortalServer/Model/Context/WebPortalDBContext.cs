@@ -52,7 +52,7 @@ namespace WebPortalServer
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Order__CustomerI__59063A47");
+                    .HasConstraintName("FK__Order__CustomerI__35BCFE0A");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Order)

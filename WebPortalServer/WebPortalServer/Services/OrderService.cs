@@ -17,25 +17,35 @@ namespace WebPortalServer.Services
 
         private void AddOrder(Order order)
         {
-            order.Archived = false;
 
-            order.Status = null;
+            Order safeOrder = new Order()
+            {
+                Date = order.Date,
+                StatusId = order.StatusId,
+                CustomerId = order.CustomerId,
+                Description = order.Description,
+                Archived = false
+            };
 
-            context.Order.Add(order);
+            context.Order.Add(safeOrder);
 
             context.SaveChanges();
+
+            order.Id = safeOrder.Id;
         }
 
         private void AddOrderProducts(Order order)
         {
             foreach (var item in order.OrderProduct)
             {
-                var product = context.Product.FirstOrDefault(x => x.Id == item.Product.Id);
+                var product = context.Product.FirstOrDefault(x => x.Id == item.ProductId);
                 product.Quantity -= item.Quantity; 
                 if (product.Quantity < 0)
                     throw new InvalidOperationException($"{product.Name} quantity was greater than total quantity");
                 context.Product.Update(product); //changing each order product quantity 
 
+                item.OderId = order.Id;
+                
                 context.OrderProduct.Add(item); //adding orderproduct links
             }
 
