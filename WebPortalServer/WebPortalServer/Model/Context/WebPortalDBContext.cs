@@ -32,7 +32,7 @@ namespace WebPortalServer
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=WebPortalDB;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Initial Catalog=WebPortalDB;Trusted_Connection=True;");
             }
         }
 
@@ -44,7 +44,7 @@ namespace WebPortalServer
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.CreationDate).HasColumnType("date");
+                entity.Property(e => e.CreationDate).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -53,19 +53,17 @@ namespace WebPortalServer
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.Property(e => e.Date).HasColumnType("date");
-
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Order__CustomerI__35BCFE0A");
+                    .HasConstraintName("FK_Order_CustomerId");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.StatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Order__StatusId__34C8D9D1");
+                    .HasConstraintName("FK_Order_StatusId");
             });
 
             modelBuilder.Entity<OrderProduct>(entity =>
@@ -95,7 +93,9 @@ namespace WebPortalServer
 
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.Property(e => e.CreationDate).HasColumnType("date");
+                entity.Property(e => e.CreationDate)
+                    .HasColumnType("date")
+                    .HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
