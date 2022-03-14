@@ -22,26 +22,25 @@ namespace WebPortalServer.Services.Validators
                 error.AddError("order", "Order can't be null");
             else
             {
+                if (order.Products == null)
+                    error.AddError("products", "Products can't be null");
+                else if (order.Products.Count == 0)
+                    error.AddError("products", "No products");
+                
                 if (order.Customer == null)
                     error.AddError("customer", "Customer can't be null");
                 else
                 {
-                    if (order.Customer.Name == null)
-                        error.AddError("customer", "Customer's name can't be null");
-                    else if (order.Customer.Name == "")
-                        error.AddError("customer", "Customer's name can't be empty");
-                    if (order.Customer.Address == null)
-                        error.AddError("address", "Customer's address can't be null");
-                    else if (order.Customer.Address == "")
-                        error.AddError("address", "Customer's address can't be empty");
-                    if (order.Date == null)
-                        error.AddError("date", "Date can't be null");
-                    else
-                    {
-                        DateTime date = new DateTime();
-                        if (!DateTime.TryParse(order.Date, out date))
-                            error.AddError("date", "Ivalid date");
-                    }
+                    if (context.Customer.FirstOrDefault(x => x.Id == order.Customer.Id) == null)
+                        error.AddError("customer", "Invalid customer id");
+                }
+                if (order.Date == null)
+                    error.AddError("date", "Date can't be null");
+                else
+                {
+                    DateTime date = new DateTime();
+                    if (!DateTime.TryParse(order.Date, out date))
+                        error.AddError("date", "Ivalid date");
                 }
                 if (order.Status == null)
                     error.AddError("status", "Status can't be null");

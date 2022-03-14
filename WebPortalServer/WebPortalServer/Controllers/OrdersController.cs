@@ -26,35 +26,28 @@ namespace WebPortalServer.Controllers
             this.validator = validator;
         }
 
+        private IQueryable<Order> GetOrders()
+        {
+            return context.Order
+                .Include(o => o.Customer)
+                .Include(o => o.OrderProduct).ThenInclude(p => p.Product);
+        }
+
         [HttpGet]
         public async Task<IEnumerable<OrderModel>> GetAll()
         {
-            var orders = await context.Order.Include(o => o.Customer)
-                                            .Include(o => o.OrderProduct).ThenInclude(p => p.Product)
-                                            .Where(o => !o.Archived).ToListAsync();
-            
-            //tmp.ForEach(order => {
-            //    order.Customer = context.Customer.FirstOrDefault(x => x.Id == order.CustomerId);
-            //    order.OrderProduct = context.OrderProduct.Where(x => x.OderId == order.Id).ToList();
-            //    foreach (var orderProduct in order.OrderProduct)
-            //    {
-            //        orderProduct.Product = context.Product.FirstOrDefault(x => x.Id == orderProduct.Id);
-            //    }
-            //}
-            //);
-            
-            return service.ConvertList(orders);
+            var orders = await GetOrders()
+                .Where(o => !o.Archived).ToListAsync();
 
-            //return service.ConvertList(await context.Order
-            //    .Where(x => !x.Archived)
-            //    .ToListAsync());
+            return service.ConvertList(orders);
         }
         [HttpGet("archived")]
         public async Task<IEnumerable<OrderModel>> GetAllArchived()
         {
-            return service.ConvertList(await context.Order
-                .Where(x => x.Archived)
-                .ToListAsync());
+            var orders = await GetOrders()
+                .Where(o => o.Archived).ToListAsync();
+
+            return service.ConvertList(orders);
         }
 
         [HttpGet("{id}")]
@@ -62,7 +55,9 @@ namespace WebPortalServer.Controllers
         {
             try
             {
-                var order = new OrderModel(await context.Order.FirstOrDefaultAsync(x => x.Id == id));
+                var order = new OrderModel(
+                    await GetOrders()
+                        .FirstOrDefaultAsync(x => x.Id == id));
                 return Ok(order);
             }
             catch
@@ -73,22 +68,10 @@ namespace WebPortalServer.Controllers
         [HttpGet("byCustomer/{userId}")]
         public async Task<IEnumerable<OrderModel>> GetByUser(int id)
         {
-            return service.ConvertList(await context.Order
-                .Where(x => x.CustomerId == id)
-                .ToListAsync());
-        }
-        [HttpGet("archived/{id}")]
-        public async Task<ActionResult<OrderModel>> GetArchived(int id)
-        {
-            try
-            {
-                var order = new OrderModel(await context.Order.FirstOrDefaultAsync(x => x.Id == id));
-                return Ok(order);
-            }
-            catch
-            {
-                return BadRequest(new ModelError("id", "Invalid id"));
-            }
+            return service.ConvertList(
+                await GetOrders()
+                    .Where(x => x.CustomerId == id)
+                    .ToListAsync());
         }
 
         [HttpPost]
@@ -166,7 +149,5 @@ namespace WebPortalServer.Controllers
                 return BadRequest(new ModelError("id", ex.Message));
             }
         }
-
-        
     }
 }
