@@ -5,7 +5,7 @@
     [Quantity] INT NOT NULL DEFAULT 0, 
     [Price] MONEY NOT NULL, 
     [Description] NVARCHAR(MAX) NULL, 
-    [CreationDate] DATE NOT NULL, 
+    [CreationDate] DATE NOT NULL DEFAULT GETUTCDATE(), 
     [CategoryId] INT NOT NULL FOREIGN KEY REFERENCES ProductCategory(Id),
     [SizeId] INT NOT NULL FOREIGN KEY REFERENCES ProductSize(Id)
 )
