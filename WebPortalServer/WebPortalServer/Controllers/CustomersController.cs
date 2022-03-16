@@ -80,6 +80,12 @@ namespace WebPortalServer.Controllers
         {
             try
             {
+                if (context.Order
+                    .Include(o => o.Customer)
+                    .Where(x => !x.Archived)
+                    .FirstOrDefault(x => x.CustomerId == id) != null)
+                    return BadRequest(new ModelError("order", "Can't delete customer while he has an order assigned"));
+
                 var customer = service.DeleteCustomer(id);
                 return Accepted(new CustomerModel(customer));
             }

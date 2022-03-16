@@ -79,6 +79,13 @@ namespace WebPortalServer.Controllers
         {
             try
             {
+                if (context.Order
+                    .Include(o => o.OrderProduct)
+                    .FirstOrDefault(x => x.OrderProduct
+                        .FirstOrDefault(p => p.ProductId == id) != null) 
+                    != null)
+                    return BadRequest(new ModelError("order", "Can't delete product contained in order"));
+
                 var product = service.DeleteProduct(id);
                 return Accepted(new ProductModel(product));
             }
