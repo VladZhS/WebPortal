@@ -44,15 +44,17 @@ namespace WebPortalServer.Services
         {
             foreach (var item in order.OrderProduct)
             {
+                item.OderId = order.Id;
+
                 var product = context.Product.FirstOrDefault(x => x.Id == item.ProductId);
-                product.Quantity -= item.Quantity; 
+                product.Quantity -= item.Quantity;
                 if (product.Quantity < 0)
                     throw new InvalidOperationException($"{product.Name} quantity was greater than total quantity");
                 context.Product.Update(product); //changing each order product quantity 
 
-                
                 context.OrderProduct.Add(item); //adding orderproduct links
             }
+
             context.SaveChanges();
         }
        
