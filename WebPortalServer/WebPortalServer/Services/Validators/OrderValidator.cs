@@ -26,12 +26,13 @@ namespace WebPortalServer.Services.Validators
                     error.AddError("products", "Products can't be null");
                 else if (order.Products.Count == 0)
                     error.AddError("products", "No products");
-                
-                if (order.Customer == null)
+
+                var customerId = order.Customer != null ? order.Customer.Id : order.CustomerId;
+                if (customerId == 0)
                     error.AddError("customer", "Customer can't be null");
                 else
-                {
-                    if (context.Customer.FirstOrDefault(x => x.Id == order.Customer.Id) == null)
+                {                   
+                    if (context.Customer.FirstOrDefault(x => x.Id == customerId) == null)
                         error.AddError("customer", "Invalid customer id");
                 }
                 if (order.Date == null)
@@ -42,9 +43,10 @@ namespace WebPortalServer.Services.Validators
                     if (!DateTime.TryParse(order.Date, out date))
                         error.AddError("date", "Ivalid date");
                 }
-                if (order.Status == null)
+                var statusId = order.Status != null ? order.Status.Id : order.StatusId;
+                if (statusId == 0)
                     error.AddError("status", "Status can't be null");
-                else if (context.OrderStatus.FirstOrDefault(x => x.Id == order.Status.Id) == null)
+                else if (context.OrderStatus.FirstOrDefault(x => x.Id == statusId) == null)
                     error.AddError("status", "Invalid status");
                 if (order.Products == null)
                     error.AddError("products", "Products can't be null");

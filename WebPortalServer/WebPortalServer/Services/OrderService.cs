@@ -40,7 +40,7 @@ namespace WebPortalServer.Services
             order.Id = safeOrder.Id;
         }
 
-        private void AddOrderProducts(Order order)
+        private void UpdateProducts(Order order)
         {
             foreach (var item in order.OrderProduct)
             {
@@ -48,11 +48,11 @@ namespace WebPortalServer.Services
 
                 var product = context.Product.FirstOrDefault(x => x.Id == item.ProductId);
                 product.Quantity -= item.Quantity;
+                
                 if (product.Quantity < 0)
                     throw new InvalidOperationException($"{product.Name} quantity was greater than total quantity");
+                
                 context.Product.Update(product); //changing each order product quantity 
-
-                context.OrderProduct.Add(item); //adding orderproduct links
             }
 
             context.SaveChanges();
@@ -68,8 +68,8 @@ namespace WebPortalServer.Services
             }
 
             //removing all the orderproducts of this order
-            context.OrderProduct.RemoveRange(context.OrderProduct.Where(x => x.OderId == order.Id));
-
+            var orderProducts = context.OrderProduct.Where(op => op.OderId == order.Id).ToList();
+            context.OrderProduct.RemoveRange(orderProducts);
 
             context.SaveChanges();
         }
@@ -124,7 +124,7 @@ namespace WebPortalServer.Services
                 try 
                 {
                     AddOrder(order);
-                    AddOrderProducts(order);
+                    UpdateProducts(order);
 
                     tran.Commit();
                 }
@@ -139,26 +139,20 @@ namespace WebPortalServer.Services
         }
         public Order UpdateOrder(OrderModel model)
         {
-            var order = GetOrders()
-                .FirstOrDefault(x => x.Id == model.Id);
-            if (order == null)
-                throw new InvalidOperationException("Invalid id");
-            if (order.Archived)
-                throw new InvalidOperationException("Can't update archived order");
+            var order = context.Order.FirstOrDefault(o => o.Id == model.Id);
 
+            if (order == null) throw new InvalidOperationException("Invalid id");
+            if (order.Archived) throw new InvalidOperationException("Can't update archived order");
 
             using (var tran = context.Database.BeginTransaction())
             {
                 try
                 {
-                    RemoveOrderProducts(order);
-
                     order = model.ToEntity(order);
 
-                    AddOrderProducts(order);
-
-                    context.Order.Update(order);
-                    context.SaveChanges();
+                    RemoveOrderProducts(order);
+                    UpdateProducts(order);
+                    UpdateOrder(order);
 
                     tran.Commit();
                 }
@@ -171,6 +165,14 @@ namespace WebPortalServer.Services
 
             return order;
         }
+
+        private void UpdateOrder(Order order)
+        {
+            context.Order.Update(order);
+
+            context.SaveChanges();
+        }
+
         public Order DeleteOrder(int id)
         {
             var order = GetOrders()

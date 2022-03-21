@@ -7,7 +7,9 @@ namespace WebPortalServer.Model.WebEnities
     public class OrderModel : BaseModel<Order>
     {
         public int Id { get; set; }
+        public int CustomerId { get; set; }
         public CustomerModel Customer { get; set; }
+        public int StatusId { get; set; }
         public StatusModel Status { get; set; }
         public decimal TotalCost { get; set; }
         public string Date { get; set; }
@@ -34,13 +36,13 @@ namespace WebPortalServer.Model.WebEnities
         public override Order ToEntity(Order order)
         {
             order.Id = Id;
-            order.Customer = Customer.ToEntity(order.Customer);
-            order.Status = Status.ToEntity(order.Status);
+            order.Customer = Customer?.ToEntity(order.Customer) ?? order.Customer;
+            order.CustomerId = Customer?.Id ?? CustomerId;
+            order.Status = Status?.ToEntity(order.Status) ?? order.Status;
+            order.StatusId = Status?.Id ?? StatusId;
             DateTime date = new DateTime();
             DateTime.TryParse(Date, out date);
             order.Date = date;
-            order.CustomerId = Customer.Id;
-            order.StatusId = Status.Id;
             order.Description = Description;
             order.OrderProduct =
                 Products.Select(x => {
