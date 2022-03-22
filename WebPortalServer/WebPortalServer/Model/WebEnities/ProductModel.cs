@@ -10,8 +10,9 @@ namespace WebPortalServer.Model.WebEnities
         public decimal Price { get; set; }
         public string Description { get; set; }
         public string CreationDate { get; set; }
-
+        public int CategoryId { get; set; }
         public virtual CategoryModel Category { get; set; }
+        public int SizeId { get; set; }
         public virtual SizeModel Size { get; set; }
 
         public ProductModel() { }
@@ -39,28 +40,12 @@ namespace WebPortalServer.Model.WebEnities
             DateTime date = new DateTime();
             DateTime.TryParse(CreationDate, out date);
             product.CreationDate = date;
-            product.Category = Category.ToEntity(product.Category);
-            product.Size = Size.ToEntity(product.Size);
-            product.CategoryId = Category.Id;
-            product.SizeId = Size.Id;
 
-            return product;
-        }
-        /*
-         * used to safely update product
-         */
-        public Product ToEntitySafe(Product product)
-        {
-            product.Id = Id;
-            product.Name = Name;
-            product.Quantity = Quantity;
-            product.Price = Price;
-            product.Description = Description;
-            DateTime date = new DateTime();
-            DateTime.TryParse(CreationDate, out date);
-            product.CreationDate = date;
-            product.CategoryId = Category.Id;
-            product.SizeId = Size.Id;
+            product.Category = Category?.ToEntity(product.Category) ?? product.Category;
+            product.CategoryId = Category?.Id ?? CategoryId;
+
+            product.Size = Size?.ToEntity(product.Size) ?? product.Size;
+            product.SizeId = Size?.Id ?? SizeId;
 
             return product;
         }

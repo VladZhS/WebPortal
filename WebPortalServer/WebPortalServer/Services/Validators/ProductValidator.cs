@@ -29,14 +29,19 @@ namespace WebPortalServer.Services.Validators
                     error.AddError("price", "Price can't be less or equal to zero");
                 else if (product.Quantity < 0)
                     error.AddError("quantity", "Quantity can't be less than zero");
-                if (product.Category == null)
+
+                var categoryId = product.Category != null ? product.Category.Id : product.CategoryId;
+                if (categoryId == 0)
                     error.AddError("category", "Category can't be null");
-                else if (context.ProductCategory.FirstOrDefault(x => x.Id == product.Category.Id) == null)
+                else if (context.ProductCategory.FirstOrDefault(x => x.Id == categoryId) == null)
                     error.AddError("category", "Invalid category");
-                if (product.Size == null)
+
+                var sizeId = product.Size != null ? product.Size.Id : product.SizeId;
+                if (sizeId == 0)
                     error.AddError("size", "Size can't be null");
-                else if (context.ProductSize.FirstOrDefault(x => x.Id == product.Size.Id) == null)
+                else if (context.ProductSize.FirstOrDefault(x => x.Id == sizeId) == null)
                     error.AddError("size", "Invalid size");
+
                 if (product.CreationDate == null)
                     error.AddError("date", "Date can't be null");
                 else

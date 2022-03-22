@@ -39,7 +39,7 @@ namespace WebPortalServer.Services
             if (product == null)
                 throw new InvalidOperationException();
 
-            product = model.ToEntitySafe(product);
+            product = model.ToEntity(product);
             context.Product.Update(product);
 
             context.SaveChanges();
