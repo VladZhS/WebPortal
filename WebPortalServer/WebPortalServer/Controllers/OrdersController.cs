@@ -66,11 +66,11 @@ namespace WebPortalServer.Controllers
             }
         }
         [HttpGet("byCustomer/{userId}")]
-        public async Task<IEnumerable<OrderModel>> GetByUser(int id)
-        {
+        public async Task<IEnumerable<OrderModel>> GetByUser(int userId)
+        { 
             return service.ConvertList(
                 await GetOrders()
-                    .Where(x => x.CustomerId == id)
+                    .Where(x => x.CustomerId == userId)
                     .ToListAsync());
         }
 

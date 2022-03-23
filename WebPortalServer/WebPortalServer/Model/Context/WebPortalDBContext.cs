@@ -64,6 +64,8 @@ namespace WebPortalServer
                     .HasForeignKey(d => d.StatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_StatusId");
+
+                entity.Property(e => e.CreationDate).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<OrderProduct>(entity =>

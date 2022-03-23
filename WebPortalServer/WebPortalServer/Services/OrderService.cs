@@ -26,7 +26,7 @@ namespace WebPortalServer.Services
 
             Order safeOrder = new Order()
             {
-                Date = order.Date,
+                CreationDate = order.CreationDate,
                 StatusId = order.StatusId,
                 CustomerId = order.CustomerId,
                 Description = order.Description,
@@ -51,6 +51,9 @@ namespace WebPortalServer.Services
                 
                 if (product.Quantity < 0)
                     throw new InvalidOperationException($"{product.Name} quantity was greater than total quantity");
+
+                item.Id = 0;
+                context.OrderProduct.Add(item);
                 
                 context.Product.Update(product); //changing each order product quantity 
             }

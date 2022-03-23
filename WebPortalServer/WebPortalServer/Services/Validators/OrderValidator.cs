@@ -35,12 +35,12 @@ namespace WebPortalServer.Services.Validators
                     if (context.Customer.FirstOrDefault(x => x.Id == customerId) == null)
                         error.AddError("customer", "Invalid customer id");
                 }
-                if (order.Date == null)
+                if (order.CreationDate == null)
                     error.AddError("date", "Date can't be null");
                 else
                 {
                     DateTime date = new DateTime();
-                    if (!DateTime.TryParse(order.Date, out date))
+                    if (!DateTime.TryParse(order.CreationDate, out date))
                         error.AddError("date", "Ivalid date");
                 }
                 var statusId = order.Status != null ? order.Status.Id : order.StatusId;
