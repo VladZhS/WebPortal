@@ -25,11 +25,17 @@ namespace WebPortalServer.Model.WebEnities
             Customer = new CustomerModel(order.Customer);
             Status = new StatusModel(order.Status);
             TotalCost = order.OrderProduct.Sum(x => x.Product.Price * x.Quantity);
+
             CreationDate = order.CreationDate.Date.ToString();
             Description = order.Description;
             Products = order.OrderProduct
-                .Select(x => x.Product)
+                .Select(x =>
+                {
+                    x.Product.Quantity = x.Quantity;
+                    return x.Product;
+                })
                 .ConvertModel<Product, ProductModel>();
+
             Archived = order.Archived;
         }
 
@@ -53,6 +59,8 @@ namespace WebPortalServer.Model.WebEnities
                         Quantity = x.Quantity,
                     };
                 }).ToList();
+
+            TotalCost = order.OrderProduct.Sum(x => x.Product.Price * x.Quantity);
             order.Archived = Archived;
             return order;
         }
